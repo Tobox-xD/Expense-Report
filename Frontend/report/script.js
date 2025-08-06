@@ -34,21 +34,15 @@ function getReportContent(id) {
   fetch('http://localhost:3000/getReportById/' + id)
     .then(res => res.json())
     .then(reportItems => {
-      let descriptionsList = reportItems.map(item => item.description);
-      console.log("Descriptions:", descriptionsList);
-      
-      let amountList = reportItems.map(item => item.amount) 
-      console.log("Amounts:", amountList);
-
-        for (let index = 0; index < descriptionsList.length; index++) {
-        const description = descriptionsList[index]; 
-        const amount = amountList[index];
-        
-        addRow(description, amount);
-     }
-      
+      clearTable();
+      reportItems.forEach(item => {
+        addRow(item.description, item.amount);
+      });
     })
-    .catch(err => clearTable());
+    .catch(err => {
+      clearTable();
+      console.error(err);
+    });
 }
 
 function addEntry(id, description, amount, created_at) {
@@ -62,7 +56,6 @@ function addEntry(id, description, amount, created_at) {
     return res.json().catch(() => null);
   });
 }
-
 
 
 function loadContent(){

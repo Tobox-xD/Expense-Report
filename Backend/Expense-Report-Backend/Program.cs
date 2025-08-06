@@ -1,138 +1,109 @@
+using NSwag.AspNetCore;
+using Microsoft.AspNetCore.Builder;
 using Npgsql;
 
+using static ExpenseEntry;
+
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = "Host=localhost;Port=5432;Username=postgres;Password=Databases123!;Database=postgres";
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddPolicy("AllowLocalhost3000", policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+        policy.WithOrigins(
+                "http://localhost:3000",
+                "http://localhost:5500",
+                "http://127.0.0.1:5500")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
-// SQL Connection
-var connectionString = "Host=localhost;Port=5432;Username=postgres;Password=Databases123!;Database=postgres";
-
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddOpenApiDocument();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseCors("AllowLocalhost3000");
+
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseOpenApi();
+    app.UseSwaggerUi(config =>
+    {
+        config.DocumentTitle = "ExpenseReport API";
+        config.Path = "/swagger";
+        config.DocumentPath = "/swagger/{documentName}/swagger.json";
+        config.DocExpansion = "list";
+    });
 }
+
 app.Urls.Add("http://localhost:3000");
 
-app.UseHttpsRedirection();
-app.UseCors("AllowAll");
-
-
-
-// GET Requests 
-app.MapGet("/getReportById/{id}", (string id) =>
+// GET
+app.MapGet("/getReportById/{id}", async (int id) =>
 {
-    var report = new List<object>();
+    await using var conn = new NpgsqlConnection(connectionString);
+    await conn.OpenAsync();
 
-    using var connection = new NpgsqlConnection(connectionString);
-    connection.Open();
+    await using var cmd = new NpgsqlCommand(
+        "SELECT * FROM expense JOIN report ON expense.report_id = report.id WHERE report_id = @id;", conn);
+    cmd.Parameters.AddWithValue("id", id);
 
-    var sql = @"
-        SELECT *
-        FROM expense
-        JOIN report ON expense.report_id = report.id
-        WHERE expense.report_id = @id;
-    ";
+    await using var reader = await cmd.ExecuteReaderAsync();
 
-    using var cmd = new NpgsqlCommand(sql, connection);
-    cmd.Parameters.AddWithValue("id", int.Parse(id));
-
-    using var reader = cmd.ExecuteReader();
-
-    while (reader.Read())
+    var results = new List<Dictionary<string, object>>();
+    while (await reader.ReadAsync())
     {
-        report.Add(new
+        var row = new Dictionary<string, object>();
+        for (int i = 0; i < reader.FieldCount; i++)
         {
-            Id = reader.GetInt32(0),
-            Description = reader.GetString(1),
-            Amount = reader.GetDecimal(2),
-            CreatedAt = reader.GetDateTime(3),
-            ReportId = reader.GetInt32(4)
-        });
+            row[reader.GetName(i)] = reader.GetValue(i);
+        }
+        results.Add(row);
     }
 
-    return report;
+    return Results.Ok(results);
 });
 
-app.MapGet("/getReportSumById/{id}", (string id) =>
+app.MapGet("/getReportSumById/{id}", async (int id) =>
 {
+    await using var conn = new NpgsqlConnection(connectionString);
+    await conn.OpenAsync();
 
-    decimal SumOfAmounts = 0;
+    await using var cmd = new NpgsqlCommand(
+        "SELECT SUM(amount) FROM expense WHERE report_id = @id;", conn);
+    cmd.Parameters.AddWithValue("id", id);
 
-    using var connection = new NpgsqlConnection(connectionString);
-    connection.Open();
+    var sumObj = await cmd.ExecuteScalarAsync();
 
-    var sql = @"
-        SELECT SUM(expense.amount)
-        FROM expense 
-        JOIN report ON expense.report_id = report.id
-        WHERE report_id = @id;
-    ";
+    // sumObj can be DBNull if no rows, so handle null safely:
+    decimal sum = sumObj != DBNull.Value && sumObj != null ? Convert.ToDecimal(sumObj) : 0m;
 
-    using var cmd = new NpgsqlCommand(sql, connection);
-    cmd.Parameters.AddWithValue("id", int.Parse(id));
-
-    using var reader = cmd.ExecuteReader();
-
-    while (reader.Read())
-    {
-        SumOfAmounts = reader.GetDecimal(0);
-    }
-
-
-    return SumOfAmounts;
+    return Results.Ok(sum);
 });
 
-// POST requests
-
-
-
-app.MapPost("/addEntry/{id}", async (int id, ExpenseCreateDto dto) =>
+app.MapPost("/addEntry/{id}", async (int id, ExpenseEntry entry) =>
 {
-    // basic validation
-    if (string.IsNullOrWhiteSpace(dto.Description) || dto.Amount < 0)
-        return Results.BadRequest("Invalid input");
+    await using var conn = new NpgsqlConnection(connectionString);
+    await conn.OpenAsync();
 
-    await using var connection = new NpgsqlConnection(connectionString);
-    await connection.OpenAsync();
+    var sql = @"INSERT INTO expense (description, amount, created_at, report_id) VALUES (@description, @amount, @created_at, @report_id)";
+    await using var cmd = new NpgsqlCommand(sql, conn);
 
-    var sql = @"
-        INSERT INTO expense (description, amount, created_at, report_id)
-        VALUES (@description, @amount, @created_at, @report_id);
-    ";
-
-    await using var cmd = new NpgsqlCommand(sql, connection);
-    cmd.Parameters.AddWithValue("description", dto.Description);
-    cmd.Parameters.AddWithValue("amount", dto.Amount);
-    cmd.Parameters.AddWithValue("created_at", dto.CreatedAt);
+    cmd.Parameters.AddWithValue("description", entry.Description);
+    cmd.Parameters.AddWithValue("amount", entry.Amount);
+    cmd.Parameters.AddWithValue("created_at", entry.CreatedAt);
     cmd.Parameters.AddWithValue("report_id", id);
 
-    var rows = await cmd.ExecuteNonQueryAsync();
+    await cmd.ExecuteNonQueryAsync();
 
-    return rows > 0
-        ? Results.Created($"/getReportById/{id}", null)
-        : Results.Problem("Insert did not affect any rows.");
+    return Results.Ok();
 });
 
+app.MapPut("/changeEntry/{id}", (int id) => Results.Ok());
+
+app.MapDelete("/deleteEntry/{id}", (int id) => Results.Ok());
 
 app.Run();
-
-
-// "Datatype" for the JSON POST request
-public record ExpenseCreateDto(string Description, decimal Amount, DateTime CreatedAt);
-
-
