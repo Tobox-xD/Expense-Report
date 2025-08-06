@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS expense;
+DROP TABLE IF EXISTS report;
+
+CREATE TABLE IF NOT EXISTS report (
+    id SERIAL PRIMARY KEY,
+    name TEXT NOT NULL,
+    enddate TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS expense (
+    id SERIAL PRIMARY KEY,
+    description TEXT NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    report_id INT REFERENCES report(id)
+);
+

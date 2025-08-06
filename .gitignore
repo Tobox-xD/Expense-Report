@@ -1,0 +1,36 @@
+# .vscode settings (optional, ignore if you don't want to share VSCode config)
+.vscode/
+
+# Ignore all bin and obj folders in Backend (common for .NET builds)
+Expense-Report/Backend/Expense-Report-Backend/bin/
+Expense-Report/Backend/Expense-Report-Backend/obj/
+
+# Ignore user-specific files in Properties (optional)
+Expense-Report/Backend/Expense-Report-Backend/Properties/*.user
+
+# Ignore Visual Studio cache, logs, and temp files (if you ever use VS)
+*.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# OS generated files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Node.js (if Frontend has node_modules or build artifacts)
+Expense-Report/Frontend/node_modules/
+Expense-Report/Frontend/dist/
+Expense-Report/Frontend/build/
+
+# Logs
+*.log
+
+# Backup files
+*.bak
+*.tmp
+*~
+
+# If you have any other build artifacts or temporary files, add here

@@ -31,3 +31,4 @@ S:\Dokumente\CodingProjects\Expense-Report\Backend\Expense-Report-Backend\obj\De
 S:\Dokumente\CodingProjects\Expense-Report\Backend\Expense-Report-Backend\obj\Debug\net9.0\Expense-Report-Backend.pdb
 S:\Dokumente\CodingProjects\Expense-Report\Backend\Expense-Report-Backend\obj\Debug\net9.0\Expense-Report-Backend.genruntimeconfig.cache
 S:\Dokumente\CodingProjects\Expense-Report\Backend\Expense-Report-Backend\obj\Debug\net9.0\ref\Expense-Report-Backend.dll
+S:\Dokumente\CodingProjects\Expense-Report\Backend\Expense-Report-Backend\bin\Debug\net9.0\Npgsql.dll

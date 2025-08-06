@@ -1,0 +1,65 @@
+:root{
+    --background: rgb(98, 117, 117);
+    --alter-background: rgb(156, 163, 163);
+    --dark-background: rgb(63, 75, 75);
+    --border: rgb(55, 58, 58);
+    --text-color:  rgb(25, 41, 40);
+
+}
+
+h1 {
+    font-size: 5rem;
+}
+
+body {
+    background-color: var(--background); 
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+input {
+    font-size: 1rem;
+    background-color: var(--alter-background);
+    color: var(--text-color);
+    border-color: var(--border);
+    border-radius: 3rem;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem 0;
+}
+
+button {
+    font-size: 1rem;
+    background-color: var(--alter-background);
+    color: var(--text-color);
+    border-color: var(--border);
+    border-radius: 3rem;
+    padding: 0.5rem 1rem;
+    margin: 0.5rem 0;
+}
+
+button:hover {
+    box-shadow: 0.4rem 0.3rem 0.5rem 0.1rem var(--dark-background);
+}
+
+.back-link {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    color: var(--text-color);
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+
+table {
+    
+}
