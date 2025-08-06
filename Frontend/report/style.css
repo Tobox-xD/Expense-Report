@@ -1,5 +1,7 @@
 table {
-    width: fit-content;
+    font-family: var(--font-sans-serif);
+    font-weight: bold;
+    max-width: 50%;
     border-collapse: separate;
     border-spacing: 0;
     background-color: var(--alter-background);
@@ -8,6 +10,31 @@ table {
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     color: var(--text-color);
+}
+
+td, th{
+    width:fit-content;
+}
+
+tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+  
+}
+
+
+thead {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+tbody {
+  display: block;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 th, td {

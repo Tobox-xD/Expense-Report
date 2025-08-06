@@ -32,6 +32,8 @@ app.UseHttpsRedirection();
 app.UseCors("AllowAll");
 
 
+
+// GET Requests 
 app.MapGet("/getReportById/{id}", (string id) =>
 {
     var report = new List<object>();
@@ -90,13 +92,47 @@ app.MapGet("/getReportSumById/{id}", (string id) =>
     {
         SumOfAmounts = reader.GetDecimal(0);
     }
-    
+
 
     return SumOfAmounts;
+});
+
+// POST requests
+
+
+
+app.MapPost("/addEntry/{id}", async (int id, ExpenseCreateDto dto) =>
+{
+    // basic validation
+    if (string.IsNullOrWhiteSpace(dto.Description) || dto.Amount < 0)
+        return Results.BadRequest("Invalid input");
+
+    await using var connection = new NpgsqlConnection(connectionString);
+    await connection.OpenAsync();
+
+    var sql = @"
+        INSERT INTO expense (description, amount, created_at, report_id)
+        VALUES (@description, @amount, @created_at, @report_id);
+    ";
+
+    await using var cmd = new NpgsqlCommand(sql, connection);
+    cmd.Parameters.AddWithValue("description", dto.Description);
+    cmd.Parameters.AddWithValue("amount", dto.Amount);
+    cmd.Parameters.AddWithValue("created_at", dto.CreatedAt);
+    cmd.Parameters.AddWithValue("report_id", id);
+
+    var rows = await cmd.ExecuteNonQueryAsync();
+
+    return rows > 0
+        ? Results.Created($"/getReportById/{id}", null)
+        : Results.Problem("Insert did not affect any rows.");
 });
 
 
 app.Run();
 
+
+// "Datatype" for the JSON POST request
+public record ExpenseCreateDto(string Description, decimal Amount, DateTime CreatedAt);
 
 
