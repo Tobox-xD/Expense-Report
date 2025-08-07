@@ -1118,11 +1118,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "S:\\Dokumente\\CodingProjects\\Expense-Report\\Backend\\Expense-Report-Backend\\Expense-Report-Backend.csproj",
+      "projectUniqueName": "C:\\Users\\Tobia\\OneDrive\\Dokumente\\OwnProjects\\Expense-Report\\Backend\\Expense-Report-Backend\\Expense-Report-Backend.csproj",
       "projectName": "Expense-Report-Backend",
-      "projectPath": "S:\\Dokumente\\CodingProjects\\Expense-Report\\Backend\\Expense-Report-Backend\\Expense-Report-Backend.csproj",
+      "projectPath": "C:\\Users\\Tobia\\OneDrive\\Dokumente\\OwnProjects\\Expense-Report\\Backend\\Expense-Report-Backend\\Expense-Report-Backend.csproj",
       "packagesPath": "C:\\Users\\Tobia\\.nuget\\packages\\",
-      "outputPath": "S:\\Dokumente\\CodingProjects\\Expense-Report\\Backend\\Expense-Report-Backend\\obj\\",
+      "outputPath": "C:\\Users\\Tobia\\OneDrive\\Dokumente\\OwnProjects\\Expense-Report\\Backend\\Expense-Report-Backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Tobia\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -1191,7 +1191,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.302/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.301/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

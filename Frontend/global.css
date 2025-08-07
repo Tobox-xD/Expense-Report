@@ -1,76 +1,160 @@
-@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Libre+Caslon+Display&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Jura:wght@300..700&family=Libre+Caslon+Display&display=swap");
 
-:root{
-    --background: rgb(98, 117, 117);
-    --alter-background: rgb(156, 163, 163);
-    --dark-background: rgb(63, 75, 75);
-    --border: rgb(55, 58, 58);
-    --text-color:  rgb(25, 41, 40);
-    --font-serif: "Libre Caslon Display", serif;
-    --font-sans-serif: "Jura", sans-serif;
-
+:root {
+  --background: rgb(98, 117, 117);
+  --alter-background: rgb(156, 163, 163);
+  --dark-background: rgb(63, 75, 75);
+  --border: rgb(55, 58, 58);
+  --text-color: rgb(25, 41, 40);
+  --font-serif: "Libre Caslon Display", serif;
+  --font-sans-serif: "Jura", sans-serif;
 }
 
 h1 {
-    font-family: var(--font-serif);
-    font-size: 5rem;
+  font-family: var(--font-serif);
+  font-size: 5rem;
 }
 
 h2 {
-    font-family: var(--font-serif);
-    font-size: 2rem;
+  font-family: var(--font-serif);
+  font-size: 2rem;
 }
 
 body {
-    background-color: var(--background); 
-    color: var(--text-color);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    margin: 0;
+  background-color: var(--background);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+}
+
+.columntype {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 input {
-    font-family: var(--font-sans-serif);
-    font-weight: bold;
-    font-size: 1rem;
-    background-color: var(--alter-background);
-    color: var(--text-color);
-    border-color: var(--border);
-    border-radius: 3rem;
-    padding: 0.5rem 1rem;
-    margin: 0.5rem 0;
+  font-family: var(--font-sans-serif);
+  font-weight: bold;
+  font-size: 1rem;
+  background-color: var(--alter-background);
+  color: var(--text-color);
+  border-color: var(--border);
+  border-radius: 3rem;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
 }
 
 button {
-    font-family: var(--font-sans-serif);
-    font-weight: bold;
-    font-size: 1rem;
-    background-color: var(--alter-background);
-    color: var(--text-color);
-    border-color: var(--border);
-    border-radius: 3rem;
-    padding: 0.5rem 1rem;
-    margin: 0.5rem 0;
+  font-family: var(--font-sans-serif);
+  font-weight: bold;
+  font-size: 1rem;
+  background-color: var(--alter-background);
+  color: var(--text-color);
+  border-color: var(--border);
+  border-radius: 3rem;
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0;
 }
 
 button:hover {
-    box-shadow: 0.4rem 0.3rem 0.5rem 0.1rem var(--dark-background);
+  box-shadow: 0.4rem 0.3rem 0.5rem 0.1rem var(--dark-background);
 }
 
 .back-link {
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    color: var(--text-color);
-    text-decoration: none;
-    font-family: var(--font-serif);
-    font-weight: bold;
-    font-size: 1.5rem;
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  color: var(--text-color);
+  text-decoration: none;
+  font-family: var(--font-serif);
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
 .back-link:hover {
-    text-decoration: underline;
+  text-decoration: underline;
+}
+
+table {
+  font-family: var(--font-sans-serif);
+  font-weight: bold;
+  max-width: 50%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: var(--alter-background);
+  margin: 1rem auto;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: var(--text-color);
+}
+
+td,
+th {
+  width: fit-content;
+}
+
+tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+thead {
+  background: white;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+tbody {
+  display: block;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+th,
+td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border: 1px solid var(--border);
+}
+
+th {
+  background-color: var(--dark-background);
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.05rem;
+}
+
+tr:hover {
+  background-color: var(--dark-background);
+  color: white;
+}
+
+td {
+  background-color: transparent;
+}
+
+h2 {
+  font-size: 3rem;
+}
+
+table tr:first-child th:first-child {
+  border-top-left-radius: 0.5rem;
+}
+table tr:first-child th:last-child {
+  border-top-right-radius: 0.5rem;
+}
+table tr:last-child td:first-child {
+  border-bottom-left-radius: 0.5rem;
+}
+table tr:last-child td:last-child {
+  border-bottom-right-radius: 0.5rem;
 }

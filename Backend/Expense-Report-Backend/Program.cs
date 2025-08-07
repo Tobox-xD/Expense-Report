@@ -84,6 +84,33 @@ app.MapGet("/getReportSumById/{id}", async (int id) =>
     return Results.Ok(sum);
 });
 
+app.MapGet("/getReports", async () =>
+{
+    await using var conn = new NpgsqlConnection(connectionString);
+    await conn.OpenAsync();
+
+
+    await using var cmd = new NpgsqlCommand(
+        "SELECT * FROM report;", conn
+    );
+
+    await using var reader = await cmd.ExecuteReaderAsync();
+
+    var results = new List<Dictionary<string, object>>();
+    while (await reader.ReadAsync())
+    {
+        var row = new Dictionary<string, object>();
+        for (int i = 0; i < reader.FieldCount; i++)
+        {
+            row[reader.GetName(i)] = reader.GetValue(i);
+        }
+        results.Add(row);
+    }
+
+    return Results.Ok(results);
+});
+
+// POST
 app.MapPost("/addEntry/{id}", async (int id, ExpenseEntry entry) =>
 {
     await using var conn = new NpgsqlConnection(connectionString);

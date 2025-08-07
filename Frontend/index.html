@@ -1,17 +1,36 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="global.css">
-        <script src="script.js" defer></script>
-        <link rel="icon" href="data:,">
-        <h1> ExpenseReport </h1>
-    </head>
 
-    <body>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="global.css">
+    <script src="script.js" defer></script>
+    <link rel="icon" href="data:,">
+    <h1> ExpenseReport </h1>
+</head>
+
+<body>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+
+        <tbody id="report-table">
+            <!-- Rows added dynamically here -->
+        </tbody>
+    </table>
+
+    <div class="columntype">
         <input type="text" id="report-id" placeholder="Report Id">
         <button id="show-report">Show Report</button>
         <button id="edit-report">Add Report</button>
-    </body>
-    
+        <button id="removie-report">Remove Report</button>
+    </div>
+
+</body>
+
 </html>
