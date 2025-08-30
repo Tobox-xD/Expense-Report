@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="dark">
 
 <head>
     <link rel="stylesheet" href="style.css">
@@ -11,18 +11,24 @@
 
 <body>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-            </tr>
-        </thead>
+    <div class="top-control">
+        <button id="toggle-dark" class="togle-dark"> Light </button>
+    </div>
 
-        <tbody id="report-table">
-            <!-- Rows added dynamically here -->
-        </tbody>
-    </table>
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+
+            <tbody id="report-table">
+                <!-- Rows added dynamically here -->
+            </tbody>
+        </table>
+    </div>
 
     <div class="columntype">
         <input type="text" id="report-id" placeholder="Report Id">
@@ -30,6 +36,8 @@
         <button id="edit-report">Add Report</button>
         <button id="removie-report">Remove Report</button>
     </div>
+
+    <button id="toggle-dark" class="togle-dark"> Light </button>
 
 </body>
 

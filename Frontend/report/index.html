@@ -1,15 +1,22 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="./../global.css">
-        <script src="script.js" defer></script>
-        <link rel="icon" href="data:,">
-        <h1> Report </h1>
-    </head>
-    <body>
+<html class="dark">
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./../global.css">
+    <script src="script.js" defer></script>
+    <link rel="icon" href="data:,">
+    <h1> Report </h1>
+</head>
+
+<body>
+
+    <div class="top-control">
         <a href="./../" class="back-link">Back</a>
-        
+        <button id="toggle-dark" class="togle-dark"> Light </button>
+    </div>
+
+    <div class="table-wrapper">
         <table>
             <thead>
                 <tr>
@@ -19,12 +26,14 @@
             </thead>
 
             <tbody id="report-table">
-            <!-- Rows added dynamically here -->
+                <!-- Rows added dynamically here -->
             </tbody>
         </table>
-        <h2 id="report-sum"></h2>
+    </div>
+    <h2 id="report-sum"></h2>
 
-        <button id="add-to-report">Add</button>
-        <button id="remove-from-report">Remove</button>
-    </body>
+    <button id="add-to-report">Add</button>
+    <button id="remove-from-report">Remove</button>
+</body>
+
 </html>
